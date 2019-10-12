@@ -1,21 +1,81 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react';
+import { Link, graphql } from 'gatsby';
+import Img from 'gatsby-image';
+import _ from 'lodash';
+import PropTypes from 'prop-types';
+import Layout from '../components/layout';
+import SEO from '../components/seo';
+import indexStyles from './index.module.scss';
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+const IndexPage = ({ data }) => {
+    const { edges } = data.graphCMS.allPhotoPost;
+    const { container, imageDiv, camera } = indexStyles;
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+    return (
+        <Layout>
+            <SEO title="Home" />
+            <div className={container}>
+                {
+                    _.map(edges, (edge) => {
+                        const { image, slug } = edge.node;
 
-export default IndexPage
+                        return (
+                            <div>
+                                <div className={imageDiv}>
+                                    <Link to={`/post/${slug}`}>
+                                        <Img fluid={image.localFile.childImageSharp.fluid} key={image.url} />
+                                    </Link>
+                                </div>
+                            </div>
+
+                        );
+                    })
+                }
+            </div>
+        </Layout>
+    );
+};
+export const pageQuery = graphql`
+  query {
+    graphCMS {
+      allPhotoPost: photosesConnection {
+        edges {
+          node {
+            image {
+              url
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 240) {
+                    ...GatsbyImageSharpFluid_withWebp
+                  }
+                }
+              }
+            }
+            id
+            slug
+          }
+        }
+      }
+    }
+  }
+`;
+
+IndexPage.propTypes = {
+    data: PropTypes.shape({
+        graphCMS: PropTypes.shape({
+            allPhotoPost: PropTypes.shape({
+                edges: PropTypes.arrayOf(PropTypes.shape({
+                    image: PropTypes.shape({
+                        url: PropTypes.string,
+                        localFile: PropTypes.shape({
+                            childImageSharp: PropTypes.shape({}),
+                        }),
+                    }),
+                })),
+            }),
+        }),
+
+
+    }).isRequired,
+};
+export default IndexPage;

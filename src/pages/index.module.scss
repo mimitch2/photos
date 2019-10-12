@@ -1,0 +1,18 @@
+.container {
+    -webkit-columns: 300px 4;
+    columns: 300px 4;
+    -webkit-column-gap: 20px;
+    column-gap: 20px;
+    overflow-y: hidden;
+}
+
+.camera {
+    width: 30px;
+}
+
+.imageDiv {
+    width: 100%;
+    -webkit-column-break-inside: avoid;
+    break-inside: avoid;
+    padding-bottom: 20px;
+}
