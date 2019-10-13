@@ -8,7 +8,7 @@ const Post = ({ data }) => {
     const {
         slug, state, city, image,
     } = data.graphCMS.photos;
-    console.log('TCL: Post -> image', image);
+
     return (
         <Layout>
             <div style={{ maxWidth: 1200, margin: '0 auto' }}>
@@ -30,6 +30,14 @@ Post.propTypes = {
                 }),
                 state: PropTypes.shape({
                     name: PropTypes.string,
+                }),
+                image: PropTypes.shape({
+                    url: PropTypes.string,
+                    localFile: PropTypes.shape({
+                        childImageSharp: PropTypes.shape({
+                            fluid: PropTypes.shape({}),
+                        }),
+                    }),
                 }),
             }),
         }),

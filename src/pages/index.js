@@ -9,7 +9,7 @@ import indexStyles from './index.module.scss';
 
 const IndexPage = ({ data }) => {
     const { edges } = data.graphCMS.allPhotoPost;
-    const { container, imageDiv, camera } = indexStyles;
+    const { container, imageDiv } = indexStyles;
 
     return (
         <Layout>
@@ -20,14 +20,11 @@ const IndexPage = ({ data }) => {
                         const { image, slug } = edge.node;
 
                         return (
-                            <div>
-                                <div className={imageDiv}>
-                                    <Link to={`/post/${slug}`}>
-                                        <Img fluid={image.localFile.childImageSharp.fluid} key={image.url} />
-                                    </Link>
-                                </div>
+                            <div className={imageDiv} key={slug}>
+                                <Link to={`/post/${slug}`}>
+                                    <Img fluid={image.localFile.childImageSharp.fluid} key={image.url} />
+                                </Link>
                             </div>
-
                         );
                     })
                 }
