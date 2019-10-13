@@ -25,6 +25,7 @@ const IndexPage = ({ data }) => {
                                     <Img fluid={image.localFile.childImageSharp.fluid} key={image.url} />
                                 </Link>
                             </div>
+
                         );
                     })
                 }

@@ -1,16 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useStaticQuery, graphql } from 'gatsby';
-
+import Img from 'gatsby-image';
+import Sidebar from './sideBar';
+import layoutStyles from './layout.module.scss';
 import Header from './header';
-import './layout.scss';
 
 const Layout = ({ children }) => {
+    const { container, gatsbyLogo } = layoutStyles;
     const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
         siteMetadata {
           title
+        }
+      }
+      placeholderImage: file(relativePath: { eq: "gatsby-logo.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 200,) {
+            ...GatsbyImageSharpFluid
+          }
         }
       }
     }
@@ -20,20 +29,19 @@ const Layout = ({ children }) => {
         <>
             <Header siteTitle={data.site.siteMetadata.title} />
             <div
-                style={{
-                    margin: '0 auto',
-                    maxWidth: 1400,
-                    padding: '0px 1.0875rem 1.45rem',
-                    paddingTop: 0,
-                }}
-            >
-                <main>{children}</main>
-                <footer>
-          © {new Date().getFullYear()}, Built with
+                className={container}
 
-                    <a href="https://www.gatsbyjs.org">Gatsby</a>
-                </footer>
+            >
+                <Sidebar />
+                <main style={{ width: '100%' }}>{children}</main>
             </div>
+
+            <footer>
+          © MIKE J. MITCHELL {new Date().getFullYear()}, BUILT WITH
+                <a href="https://www.gatsbyjs.org" target="__blank" className={gatsbyLogo}>
+                    <Img fluid={data.placeholderImage.childImageSharp.fluid} />
+                </a>
+            </footer>
         </>
     );
 };

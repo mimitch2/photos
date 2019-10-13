@@ -3,17 +3,23 @@ import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import PropTypes from 'prop-types';
 import Layout from '../components/layout';
+import postStyles from './post.module.scss';
 
 const Post = ({ data }) => {
     const {
         slug, state, city, image,
     } = data.graphCMS.photos;
+    const { container, pic } = postStyles;
 
     return (
         <Layout>
-            <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+            <div className={container}>
                 {`${slug} - ${city.name} - ${state ? state.name : ''}`}
-                <Img fluid={image.localFile.childImageSharp.fluid} />
+                <Img
+                    className={pic}
+                    fluid={image.localFile.childImageSharp.fluid}
+                    imgStyle={{ objectFit: 'contain' }}
+                />
             </div>
         </Layout>
     );
@@ -60,7 +66,7 @@ export const pageQuery = graphql`
                 url
                 localFile {
                   childImageSharp {
-                    fluid( maxWidth: 1024, quality: 100 ) {
+                    fluid( quality: 100 ) {
                       ...GatsbyImageSharpFluid
                     }
                   }
