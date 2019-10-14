@@ -1,11 +1,14 @@
 .container {
     display: flex;
     flex-direction: column;
-    width: 34px;
-    margin-right: 20px;
+    width: 30px;
+    margin: 0 10px;
+    position: fixed;
+    top: 137px;
+    left: 20px;
 }
 
 .icon {
     color: white;
-    padding: 6px 0;
+    padding: 10px 0;
 }

@@ -15,10 +15,10 @@ const Header = ({ siteTitle }) => {
                 to="/"
                 className={link}
             >
-                <Camera style={{ width: 30, fontWeight: 200, margin: '8px 13px 0 0' }} />
-                <h1 style={{ margin: 0, textAlign: 'center' }}>
+                <Camera style={{ width: 24, margin: '8px 13px 0 0' }} />
+                <h2 style={{ margin: 0, textAlign: 'center' }}>
                     {_.toUpper(siteTitle)}
-                </h1>
+                </h2>
 
             </Link>
         </header>

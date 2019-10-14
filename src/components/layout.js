@@ -28,12 +28,10 @@ const Layout = ({ children }) => {
     return (
         <>
             <Header siteTitle={data.site.siteMetadata.title} />
-            <div
-                className={container}
 
-            >
+            <div className={container}>
                 <Sidebar />
-                <main style={{ width: '100%' }}>{children}</main>
+                <main>{children}</main>
             </div>
 
             <footer>

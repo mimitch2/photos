@@ -2,19 +2,22 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
 import Layout from '../components/layout';
 import postStyles from './post.module.scss';
 
 const Post = ({ data }) => {
     const {
-        slug, state, city, image,
+        state, city, image, format,
     } = data.graphCMS.photos;
     const { container, pic } = postStyles;
 
     return (
         <Layout>
             <div className={container}>
-                {`${slug} - ${city.name} - ${state ? state.name : ''}`}
+                <p>
+                    {_.toUpper(`${city.name}  ${state ? `, ${state.name}` : ''} - ${format}`)}
+                </p>
                 <Img
                     className={pic}
                     fluid={image.localFile.childImageSharp.fluid}
