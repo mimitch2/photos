@@ -8,22 +8,20 @@ import postStyles from './post.module.scss';
 
 const Post = ({ data }) => {
     const {
-        state, city, image, format,
+        state, city, image,
     } = data.graphCMS.photos;
-    const { container, pic } = postStyles;
+    const { pic } = postStyles;
 
     return (
         <Layout>
-            <div className={container}>
-                <p>
-                    {_.toUpper(`${city.name}  ${state ? `, ${state.name}` : ''} - ${format}`)}
-                </p>
-                <Img
-                    className={pic}
-                    fluid={image.localFile.childImageSharp.fluid}
-                    imgStyle={{ objectFit: 'contain' }}
-                />
-            </div>
+            <p style={{ textAlign: 'center', marginLeft: '80px' }}>
+                {_.toUpper(`${city.name}  ${state ? `, ${state.name}` : ''}`)}
+            </p>
+            <Img
+                className={pic}
+                fluid={image.localFile.childImageSharp.fluid}
+                imgStyle={{ objectFit: 'contain' }}
+            />
         </Layout>
     );
 };
@@ -70,7 +68,7 @@ export const pageQuery = graphql`
                 localFile {
                   childImageSharp {
                     fluid( quality: 100 ) {
-                      ...GatsbyImageSharpFluid
+                        ...GatsbyImageSharpFluid_withWebp_noBase64
                     }
                   }
                 }

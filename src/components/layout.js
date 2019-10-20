@@ -5,9 +5,11 @@ import Img from 'gatsby-image';
 import Sidebar from './sideBar';
 import layoutStyles from './layout.module.scss';
 import Header from './header';
+// import SEO from './seo';
+
 
 const Layout = ({ children }) => {
-    const { container, gatsbyLogo } = layoutStyles;
+    const { container, innerContainer, gatsbyLogo } = layoutStyles;
     const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -15,7 +17,7 @@ const Layout = ({ children }) => {
           title
         }
       }
-      placeholderImage: file(relativePath: { eq: "gatsby-logo.png" }) {
+      placeholderImage: file(relativePath: { eq: "gatsby-icon.png" }) {
         childImageSharp {
           fluid(maxWidth: 200,) {
             ...GatsbyImageSharpFluid
@@ -27,13 +29,14 @@ const Layout = ({ children }) => {
 
     return (
         <>
+
             <Header siteTitle={data.site.siteMetadata.title} />
-
+            <Sidebar />
             <div className={container}>
-                <Sidebar />
-                <main>{children}</main>
+                <div className={innerContainer}>
+                    <main>{children}</main>
+                </div>
             </div>
-
             <footer>
           © MIKE J. MITCHELL {new Date().getFullYear()}, BUILT WITH
                 <a href="https://www.gatsbyjs.org" target="__blank" className={gatsbyLogo}>
