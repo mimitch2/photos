@@ -7,8 +7,8 @@ dotenv.config({
 module.exports = {
     siteMetadata: {
         siteUrl: process.env.SITE_URL,
-        title: 'Mike J. Mitchell Photography',
-        description: 'Photographs by Mike J. Mitchell.',
+        title: 'Mike J Mitchell Photography | Photos by Mike J. Mitchell | Photgoraphy',
+        description: 'Photos by Mike J. Mitchell.',
         author: '@mimitch',
     },
     plugins: [
@@ -74,23 +74,24 @@ module.exports = {
         },
         {
             resolve: 'gatsby-plugin-sass',
+            options: {
+                data: '@import "_variables.scss";',
+                includePaths: ['src/scss'],
+            },
         },
         'gatsby-transformer-sharp',
         'gatsby-plugin-sharp',
         {
             resolve: 'gatsby-plugin-manifest',
             options: {
-                name: 'gatsby-starter-default',
-                short_name: 'starter',
+                name: 'Mike J Mitchell Photography',
+                short_name: 'Mike J Mitchell Photography',
                 start_url: '/',
                 background_color: '#663399',
                 theme_color: '#663399',
                 display: 'minimal-ui',
-                icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
+                icon: 'src/images/camera-24.png', // This path is relative to the root of the site.
             },
         },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
     ],
 };

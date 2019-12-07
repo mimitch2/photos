@@ -8,7 +8,14 @@
     left: 20px;
 }
 
+.cameraIcon {
+    cursor: pointer;
+}
+
 .icon {
-    color: white;
+    width: 24px;
     padding: 10px 0;
+    &:hover {
+        opacity: 0.5;
+    }
 }

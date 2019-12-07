@@ -4,7 +4,7 @@ import Img from 'gatsby-image';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import Layout from '../components/layout';
-import SEO from '../components/seo';
+// import SEO from '../components/seo';
 import indexStyles from './index.module.scss';
 
 const IndexPage = ({ data }) => {
@@ -13,7 +13,6 @@ const IndexPage = ({ data }) => {
 
     return (
         <Layout>
-            <SEO title="Home" />
             <div className={container}>
                 {
                     _.map(edges, (edge) => {
@@ -72,8 +71,6 @@ IndexPage.propTypes = {
                 })),
             }),
         }),
-
-
     }).isRequired,
 };
 export default IndexPage;

@@ -13,15 +13,15 @@ const Post = ({ data }) => {
     const { pic } = postStyles;
 
     return (
-        <Layout>
-            <p style={{ textAlign: 'center', marginLeft: '80px' }}>
-                {_.toUpper(`${city.name}  ${state ? `, ${state.name}` : ''}`)}
-            </p>
-            <Img
-                className={pic}
-                fluid={image.localFile.childImageSharp.fluid}
-                imgStyle={{ objectFit: 'contain' }}
-            />
+        <Layout picData={_.toUpper(`${city.name}  ${state ? `, ${state.name}` : ''}`)}>
+            <div style={{ maxWidth: '1400px' }}>
+                <Img
+                    className={pic}
+                    fluid={image.localFile.childImageSharp.fluid}
+                    imgStyle={{ objectFit: 'contain', width: '100%' }}
+                    alt={city.name}
+                />
+            </div>
         </Layout>
     );
 };
@@ -67,7 +67,7 @@ export const pageQuery = graphql`
                 url
                 localFile {
                   childImageSharp {
-                    fluid( quality: 100 ) {
+                    fluid( maxWidth: 1400, quality: 100 ) {
                         ...GatsbyImageSharpFluid_withWebp_noBase64
                     }
                   }

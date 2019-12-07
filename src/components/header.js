@@ -1,36 +1,100 @@
-import { Link } from 'gatsby';
+/* eslint-disable no-undef */
+import {
+    Link, useStaticQuery, graphql, navigate,
+} from 'gatsby';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useEffect, useContext } from 'react';
 import _ from 'lodash';
-import Camera from '../assets/camera-retro-light.svg';
+import Img from 'gatsby-image';
+import Chevron from '../assets/chevron-left-regular.svg';
 import headerStyles from './header.module.scss';
+import LayoutContext from '../context/layoutContext';
 
-const Header = ({ siteTitle }) => {
-    const { container, link } = headerStyles;
+const Header = ({ picData }) => {
+    // const [isPost, setIsPost] = useState(false);
+    const isPostMethods = useContext(LayoutContext);
+    const { isPost, setIsPost, navOutFromPost } = isPostMethods;
+    const {
+        container, icon, backLink, hiddenBackLink, back, title, pic,
+    } = headerStyles;
+    const data = useStaticQuery(graphql`
+    query imageQuery {
+      placeholderImage: file(relativePath: { eq: "camera-512.png" }) {
+        childImageSharp {
+          fluid(maxWidth: 100,) {
+            ...GatsbyImageSharpFluid
+        }
+        }
+      }
+    }
+  `);
+
+    useEffect(() => {
+        const isItPost = _.includes(window.location.pathname, 'post');
+        if (isItPost) {
+            setTimeout(() => {
+                setIsPost(true);
+            }, 5);
+        }
+    }, []);
+
     return (
         <header
             className={container}
         >
-            <Link
-                to="/"
-                className={link}
-            >
-                <Camera style={{ width: 24, margin: '8px 13px 0 0' }} />
-                <h2 style={{ margin: 0, textAlign: 'center' }}>
-                    {_.toUpper(siteTitle)}
-                </h2>
+            <div className={isPost ? backLink : hiddenBackLink}>
+                <span
+                    role="button"
+                    tabIndex="0"
+                    onKeyDown={(e) => {
+                        if (e.keyCode === 13 || e.keyCode === 32) {
+                            nav();
+                        }
+                    }}
+                    onMouseDown={(e) => {
+                        e.preventDefault();
+                        navOutFromPost();
+                    }}
+                    className={back}
+                >
+                    <Chevron className={icon} />
+                </span>
+                <h4>{picData}</h4>
+            </div>
 
-            </Link>
+            <span
+                role="button"
+                tabIndex="0"
+                onKeyDown={(e) => {
+                    if (e.keyCode === 13 || e.keyCode === 32) {
+                        nav();
+                    }
+                }}
+                onMouseDown={(e) => {
+                    e.preventDefault();
+                    navOutFromPost();
+                }}
+                className={title}
+            >
+                <Img
+                    fluid={data.placeholderImage.childImageSharp.fluid}
+                    className={pic}
+                />
+                <h2 style={{ margin: 0, textAlign: 'center' }}>
+                    {_.toUpper('mike mitchell')}
+                </h2>
+            </span>
         </header>
     );
 };
 
 Header.propTypes = {
-    siteTitle: PropTypes.string,
+    picData: PropTypes.string,
 };
 
 Header.defaultProps = {
-    siteTitle: '',
+    picData: null,
 };
+
 
 export default Header;

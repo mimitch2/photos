@@ -64,9 +64,7 @@ exports.createPages = async({ graphql, actions }) => {
     const { allPhotoPost } = result.data.graphCMS;
 
     const postTemplate = path.resolve('./src/templates/post.js');
-    // We want to create a detailed page for each
-    // post node. We'll just use the WordPress Slug for the slug.
-    // The Post ID is prefixed with 'POST_'
+
     allPhotoPost.edges.forEach((edge) => {
         createPage({
             path: `/post/${edge.node.slug}`,
@@ -76,4 +74,13 @@ exports.createPages = async({ graphql, actions }) => {
             },
         });
     });
+
+
+    // createPage({
+    //     path: '/',
+    //     component: path.resolve('./src/pages/index.js'),
+    //     context: {
+    //         path: '/',
+    //     },
+    // });
 };

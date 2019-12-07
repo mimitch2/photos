@@ -1,19 +1,67 @@
 .container {
-    background-color: black;
+    background-color: $background-color;
     z-index: 3;
     position: fixed;
     top: 0;
-    left: 80px;
     width: 100vw;
     height: 90px;
     padding-top: 20px;
-}
-
-.link {
-    text-decoration: none;
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    a {
+        &:hover {
+            opacity: 0.5;
+        }
+    }
+
+    h4 {
+        margin-top: 1px;
+    }
+}
+
+.backLink {
+    display: flex;
+    position: absolute;
+    left: 30px;
+    top: 48px;
+    opacity: 1;
+    transition: all 0.2s ease-in-out;
+}
+
+.hiddenBackLink {
+    display: flex;
+    position: absolute;
+    left: 24px;
+    top: 48px;
+    font-style: italic;
+    opacity: 0;
+    transition: all 0.15s ease-in-out;
+}
+.back {
+    cursor: pointer;
+    color: white;
+    width: 10px;
+    margin-right: 10px;
+    &:hover {
+        opacity: 0.5;
+    }
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    margin-left: 40px;
+    cursor: pointer;
+    &:hover {
+        opacity: 0.5;
+    }
+}
+
+.pic {
+    width: 38px;
+    margin-right: 6px;
+    transform: translateY(1px);
 }
