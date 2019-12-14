@@ -1,18 +1,13 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, navigate } from 'gatsby';
 import Camera from '../assets/camera-retro-light.svg';
 import Mail from '../assets/envelope-light.svg';
 import Info from '../assets/info-circle-light.svg';
 import Instagram from '../assets/instagram-brands.svg';
 import sideBarStyles from './sideBar.module.scss';
-import LayoutContext from '../context/layoutContext';
-
 
 const Sidebar = () => {
     const { container, cameraIcon, icon } = sideBarStyles;
-    const isPostMethods = useContext(LayoutContext);
-    const { navOutFromPost } = isPostMethods;
-
 
     return (
         <div className={container}>
@@ -22,12 +17,12 @@ const Sidebar = () => {
                 tabIndex="0"
                 onKeyDown={(e) => {
                     if (e.keyCode === 13 || e.keyCode === 32) {
-                        navOutFromPost();
+                        navigate('/');
                     }
                 }}
                 onMouseDown={(e) => {
                     e.preventDefault();
-                    navOutFromPost();
+                    navigate('/');
                 }}
             >
                 <Camera className={icon} />

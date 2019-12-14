@@ -1,32 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { useStaticQuery, graphql, navigate } from 'gatsby';
+import { useStaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import { LayoutProvider } from '../context/layoutContext';
 import Sidebar from './sideBar';
 import layoutStyles from './layout.module.scss';
 import Header from './header';
 import SEO from './seo';
-
+import useIsPost from '../hooks/useIsPost';
 
 const Layout = ({
     metaDescription, picData,
     metaTitle, children,
 }) => {
-    const [isPost, setIsPost] = useState(false);
-    const navOutFromPost = () => {
-        if (isPost) {
-            setIsPost(false);
-            setTimeout(() => {
-                navigate('/');
-            }, 150);
-        }
-    };
-    const isPostMethods = { isPost, setIsPost, navOutFromPost };
+    const [isPost, setIsPost] = useIsPost();
 
     const {
         outerWrapper, container, innerContainer, gatsbyLogo,
     } = layoutStyles;
+
     const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -46,7 +38,7 @@ const Layout = ({
   `);
 
     return (
-        <LayoutProvider value={isPostMethods}>
+        <LayoutProvider value={{ isPost, setIsPost }}>
             <Header picData={picData} />
             <Sidebar />
             <div className={outerWrapper}>

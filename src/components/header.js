@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import {
-    Link, useStaticQuery, graphql, navigate,
+    useStaticQuery, graphql, navigate,
 } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useContext } from 'react';
@@ -11,12 +11,11 @@ import headerStyles from './header.module.scss';
 import LayoutContext from '../context/layoutContext';
 
 const Header = ({ picData }) => {
-    // const [isPost, setIsPost] = useState(false);
-    const isPostMethods = useContext(LayoutContext);
-    const { isPost, setIsPost, navOutFromPost } = isPostMethods;
     const {
         container, icon, backLink, hiddenBackLink, back, title, pic,
     } = headerStyles;
+    const { isPost, setIsPost } = useContext(LayoutContext);
+
     const data = useStaticQuery(graphql`
     query imageQuery {
       placeholderImage: file(relativePath: { eq: "camera-512.png" }) {
@@ -31,12 +30,24 @@ const Header = ({ picData }) => {
 
     useEffect(() => {
         const isItPost = _.includes(window.location.pathname, 'post');
+
         if (isItPost) {
             setTimeout(() => {
                 setIsPost(true);
             }, 5);
         }
     }, []);
+
+    const nav = () => {
+        if (isPost) {
+            setIsPost(false);
+            setTimeout(() => {
+                navigate('/');
+            }, 150);
+        } else {
+            navigate('/');
+        }
+    };
 
     return (
         <header
@@ -53,7 +64,7 @@ const Header = ({ picData }) => {
                     }}
                     onMouseDown={(e) => {
                         e.preventDefault();
-                        navOutFromPost();
+                        nav();
                     }}
                     className={back}
                 >
@@ -72,7 +83,7 @@ const Header = ({ picData }) => {
                 }}
                 onMouseDown={(e) => {
                     e.preventDefault();
-                    navOutFromPost();
+                    nav();
                 }}
                 className={title}
             >
@@ -81,7 +92,7 @@ const Header = ({ picData }) => {
                     className={pic}
                 />
                 <h2 style={{ margin: 0, textAlign: 'center' }}>
-                    {_.toUpper('mike mitchell')}
+                    MIKE MITCHELL
                 </h2>
             </span>
         </header>
