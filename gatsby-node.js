@@ -2,16 +2,7 @@ const path = require('path');
 const slash = require('slash');
 const gatsbySourceFileSystem = require('gatsby-source-filesystem');
 
-exports.createResolvers = (
-    {
-        actions,
-        cache,
-        createNodeId,
-        createResolvers,
-        reporter,
-        store,
-    },
-) => {
+exports.createResolvers = ({ actions, cache, createNodeId, createResolvers, reporter, store }) => {
     const { createNode } = actions;
     createResolvers({
         graphCMS_Asset: {
@@ -33,7 +24,7 @@ exports.createResolvers = (
     });
 };
 
-exports.createPages = async({ graphql, actions }) => {
+exports.createPages = async ({ graphql, actions }) => {
     const { createPage } = actions;
 
     // The “graphql” function allows us to run arbitrary
@@ -41,19 +32,19 @@ exports.createPages = async({ graphql, actions }) => {
     // it like the site has a built-in database constructed
     // from the fetched data that you can run queries against.
     const result = await graphql(`
-  {
-    graphCMS {
-      allPhotoPost: photosesConnection {
-        edges {
-          node {
-            id
-            slug
-          }
+        {
+            graphCMS {
+                allPhotoPost: photosesConnection {
+                    edges {
+                        node {
+                            id
+                            slug
+                        }
+                    }
+                }
+            }
         }
-      }
-    }
-  }
-  `);
+    `);
 
     // Check for any errors
     if (result.errors) {
@@ -74,7 +65,6 @@ exports.createPages = async({ graphql, actions }) => {
             },
         });
     });
-
 
     // createPage({
     //     path: '/',

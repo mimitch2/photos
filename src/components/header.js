@@ -1,7 +1,5 @@
 /* eslint-disable no-undef */
-import {
-    useStaticQuery, graphql, navigate,
-} from 'gatsby';
+import { useStaticQuery, graphql, navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useContext } from 'react';
 import _ from 'lodash';
@@ -11,22 +9,20 @@ import headerStyles from './header.module.scss';
 import LayoutContext from '../context/layoutContext';
 
 const Header = ({ picData }) => {
-    const {
-        container, icon, backLink, hiddenBackLink, back, title, pic,
-    } = headerStyles;
+    const { container, icon, backLink, hiddenBackLink, back, title, pic } = headerStyles;
     const { isPost, setIsPost } = useContext(LayoutContext);
 
     const data = useStaticQuery(graphql`
-    query imageQuery {
-      placeholderImage: file(relativePath: { eq: "camera-512.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 100,) {
-            ...GatsbyImageSharpFluid
+        query imageQuery {
+            placeholderImage: file(relativePath: { eq: "camera-512.png" }) {
+                childImageSharp {
+                    fluid(maxWidth: 100) {
+                        ...GatsbyImageSharpFluid
+                    }
+                }
+            }
         }
-        }
-      }
-    }
-  `);
+    `);
 
     useEffect(() => {
         const isItPost = _.includes(window.location.pathname, 'post');
@@ -50,9 +46,7 @@ const Header = ({ picData }) => {
     };
 
     return (
-        <header
-            className={container}
-        >
+        <header className={container}>
             <div className={isPost ? backLink : hiddenBackLink}>
                 <span
                     role="button"
@@ -87,13 +81,8 @@ const Header = ({ picData }) => {
                 }}
                 className={title}
             >
-                <Img
-                    fluid={data.placeholderImage.childImageSharp.fluid}
-                    className={pic}
-                />
-                <h2 style={{ margin: 0, textAlign: 'center' }}>
-                    MIKE MITCHELL
-                </h2>
+                <Img fluid={data.placeholderImage.childImageSharp.fluid} className={pic} />
+                <h2 style={{ margin: 0, textAlign: 'center' }}>MIKE MITCHELL</h2>
             </span>
         </header>
     );
@@ -106,6 +95,5 @@ Header.propTypes = {
 Header.defaultProps = {
     picData: null,
 };
-
 
 export default Header;

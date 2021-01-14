@@ -15,6 +15,9 @@ module.exports = {
         'space-before-function-paren': ['error', 'never'],
         'linebreak-style': ['error', 'unix'],
         'arrow-body-style': ['error', 'always'],
+        'object-curly-newline': 'off',
+        'comma-dangle': 'off',
+        'space-before-function-paren': 'off',
         'no-plusplus': [
             'error',
             {

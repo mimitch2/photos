@@ -9,43 +9,35 @@ import Header from './header';
 import SEO from './seo';
 import useIsPost from '../hooks/useIsPost';
 
-const Layout = ({
-    metaDescription, picData,
-    metaTitle, children,
-}) => {
+const Layout = ({ metaDescription, picData, metaTitle, children }) => {
     const [isPost, setIsPost] = useIsPost();
 
-    const {
-        outerWrapper, container, innerContainer, gatsbyLogo,
-    } = layoutStyles;
+    const { outerWrapper, container, innerContainer, gatsbyLogo } = layoutStyles;
 
     const data = useStaticQuery(graphql`
-    query SiteTitleQuery {
-      site {
-        siteMetadata {
-          title
-          description
+        query SiteTitleQuery {
+            site {
+                siteMetadata {
+                    title
+                    description
+                }
+            }
+            placeholderImage: file(relativePath: { eq: "gatsby-icon.png" }) {
+                childImageSharp {
+                    fluid(maxWidth: 100) {
+                        ...GatsbyImageSharpFluid_withWebp_noBase64
+                    }
+                }
+            }
         }
-      }
-      placeholderImage: file(relativePath: { eq: "gatsby-icon.png" }) {
-        childImageSharp {
-          fluid(maxWidth: 100,) {
-            ...GatsbyImageSharpFluid_withWebp_noBase64
-          }
-        }
-      }
-    }
-  `);
+    `);
 
     return (
         <LayoutProvider value={{ isPost, setIsPost }}>
             <Header picData={picData} />
             <Sidebar />
             <div className={outerWrapper}>
-                <SEO
-                    title={metaTitle}
-                    description={metaDescription}
-                />
+                <SEO title={metaTitle} description={metaDescription} />
                 <div className={container}>
                     <div className={innerContainer}>
                         <main>{children}</main>
@@ -53,7 +45,7 @@ const Layout = ({
                 </div>
                 <div>
                     <footer>
-                    © MIKE J. MITCHELL {new Date().getFullYear()}, BUILT WITH
+                        © MIKE J. MITCHELL {new Date().getFullYear()}, BUILT WITH
                         <a href="https://www.gatsbyjs.org" target="__blank" className={gatsbyLogo}>
                             <Img fluid={data.placeholderImage.childImageSharp.fluid} />
                         </a>
@@ -70,7 +62,6 @@ Layout.propTypes = {
     metaTitle: PropTypes.string.isRequired,
     picData: PropTypes.string,
 };
-
 
 Layout.defaultProps = {
     picData: null,
