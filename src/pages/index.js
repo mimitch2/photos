@@ -11,63 +11,65 @@ const IndexPage = ({ data }) => {
     const { container, imageDiv } = indexStyles;
 
     return (
-        <Layout>
+        <Layout metaDescription="Mike Mitchell Photography" metaTitle="Mike Mitchell Photography">
             <div className={container}>
-                {
-                    _.map(edges, (edge) => {
-                        const { image, slug } = edge.node;
+                {_.map(edges, (edge) => {
+                    const { image, slug } = edge.node;
 
-                        return (
-                            <div className={imageDiv} key={slug}>
-                                <Link to={`/post/${slug}`}>
-                                    <Img fluid={image.localFile.childImageSharp.fluid} key={image.url} />
-                                </Link>
-                            </div>
-
-                        );
-                    })
-                }
+                    return (
+                        <div className={imageDiv} key={slug}>
+                            <Link to={`/post/${slug}`}>
+                                <Img
+                                    fluid={image.localFile.childImageSharp.fluid}
+                                    key={image.url}
+                                />
+                            </Link>
+                        </div>
+                    );
+                })}
             </div>
         </Layout>
     );
 };
 export const pageQuery = graphql`
-  query {
-    graphCMS {
-      allPhotoPost: photosesConnection {
-        edges {
-          node {
-            image {
-              url
-              localFile {
-                childImageSharp {
-                  fluid(maxWidth: 240) {
-                    ...GatsbyImageSharpFluid_withWebp
-                  }
+    query {
+        graphCMS {
+            allPhotoPost: photosesConnection {
+                edges {
+                    node {
+                        image {
+                            url
+                            localFile {
+                                childImageSharp {
+                                    fluid(maxWidth: 240) {
+                                        ...GatsbyImageSharpFluid_withWebp
+                                    }
+                                }
+                            }
+                        }
+                        id
+                        slug
+                    }
                 }
-              }
             }
-            id
-            slug
-          }
         }
-      }
     }
-  }
 `;
 
 IndexPage.propTypes = {
     data: PropTypes.shape({
         graphCMS: PropTypes.shape({
             allPhotoPost: PropTypes.shape({
-                edges: PropTypes.arrayOf(PropTypes.shape({
-                    image: PropTypes.shape({
-                        url: PropTypes.string,
-                        localFile: PropTypes.shape({
-                            childImageSharp: PropTypes.shape({}),
+                edges: PropTypes.arrayOf(
+                    PropTypes.shape({
+                        image: PropTypes.shape({
+                            url: PropTypes.string,
+                            localFile: PropTypes.shape({
+                                childImageSharp: PropTypes.shape({}),
+                            }),
                         }),
-                    }),
-                })),
+                    })
+                ),
             }),
         }),
     }).isRequired,
